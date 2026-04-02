@@ -15,29 +15,60 @@ The agent:
 ---
 
 project-root/
-│
-├── inference.py          # 🚀 Entry point (runs agent loop)
-├── openenv.yaml          # OpenEnv configuration
-├── Dockerfile            # Deployment setup
-├── requirements.txt      # Dependencies
-│
-├── env/                  # 🧠 Core Environment Logic
-│   ├── environment.py    # reset() and step()
-│   ├── state.py          # State structure
-│   ├── actions.py        # Action definitions
-│   ├── reward.py         # Reward function
-│   ├── grader.py         # Final scoring (0–1)
-│   │
-│   └── tasks/            # Problem cases
+
+├── inference.py
+│   # 🚀 Entry point (runs agent loop)
+
+├── openenv.yaml
+│   # OpenEnv configuration
+
+├── Dockerfile
+│   # Deployment setup
+
+├── requirements.txt
+│   # Dependencies
+
+
+├── env/
+│   # 🧠 Core Environment Logic
+
+│   ├── environment.py
+│   │   # reset() and step()
+
+│   ├── state.py
+│   │   # State structure
+
+│   ├── actions.py
+│   │   # Action definitions
+
+│   ├── reward.py
+│   │   # Reward function
+
+│   ├── grader.py
+│   │   # Final scoring (0–1)
+
+│   └── tasks/
+│       # Problem cases
+
 │       ├── easy.py
 │       ├── medium.py
 │       └── hard.py
-│
-├── utils/                # Helper utilities
-│   ├── prompt_builder.py # Builds LLM prompts
-│   └── action_parser.py  # Parses model output → action
-│
-└── README.md             # Project guide
+
+
+├── utils/
+│   # Helper utilities
+
+│   ├── prompt_builder.py
+│   │   # Builds LLM prompts
+
+│   └── action_parser.py
+│       # Parses model output → action
+
+
+└── README.md
+    # Project guide
+
+    
 ## 🔄 How The System Works
 
 ### Step-by-step flow:
