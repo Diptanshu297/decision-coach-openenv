@@ -23,51 +23,29 @@ def decision(request: DecisionRequest):
 
 
 # ---------------- GRADIO ---------------- #
-def gradio_interface(user_input):
-    result = run_inference(user_input)
+def solve(problem):
+    result = run_inference(problem)
 
-    steps = []
+    steps = ""
     for step in result["conversation_history"]:
-        step_type = step["type"].replace("_", " ").title()
-        step_content = step["content"]
-        steps.append(f"### {step_type}\n{step_content}")
+        steps += f"{step['type']}: {step['content']}\n\n"
 
-    final = result["final_answer"]
-    scores = result["scores"]
+    final = result.get("final_answer", "")
 
-    formatted_steps = "\n\n".join(steps)
+    return steps, final
 
-    score_block = f"""
----
-## 📊 Evaluation Scores
 
-- 🧠 Final Score: **{scores['final_score']}**
-- ⚙️ Rule Score: **{scores['rule_score']}**
-- 🤖 LLM Judge Score: **{scores['llm_score']}**
-"""
-
-    return f"""
-## 🧠 Decision Process
-
-{formatted_steps}
-
----
-
-## ✅ Final Recommendation
-{final}
-
-{score_block}
-"""
-
-gradio_app = gr.Interface(
-    fn=gradio_interface,
-    inputs=gr.Textbox(
-    label="Enter your problem",
-    placeholder="e.g., I am confused about my career path..." ),
-    outputs=gr.Markdown(),  # ✅ FIXED
-    title="🧠 Decision Coach AI",
-    description="Get step-by-step decision help"
+demo = gr.Interface(
+    fn=solve,
+    inputs=gr.Textbox(label="Enter your problem"),
+    outputs=[
+        gr.Textbox(label="Reasoning Steps"),
+        gr.Textbox(label="Final Answer"),
+    ],
+    title="Decision Coach AI",
 )
-# ---------------- COMBINE ---------------- #
-# Mount Gradio inside FastAPI
-app = gr.mount_gradio_app(app, gradio_app, path="/ui")
+
+
+# ✅ RUN UI (not FastAPI server)
+if __name__ == "__main__":
+    demo.launch()
