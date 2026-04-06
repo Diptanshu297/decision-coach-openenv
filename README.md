@@ -1,3 +1,13 @@
+---
+title: Decision Coach AI
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: gradio
+sdk_version: 6.11.0
+app_file: app.py
+pinned: false
+---
 📄 🧠 README.md (Developer Guide)
 # Decision Coach OpenEnv
 
