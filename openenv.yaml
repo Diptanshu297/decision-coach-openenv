@@ -1,56 +1,18 @@
-name: decision_coach_env
-description: >
-  An environment that simulates real-world decision making by guiding users
-  through structured reasoning and generating actionable recommendations.
+name: decision-coach-env
+description: RL-style decision making environment
 
-version: 1.0
+entry_point: env.environment:DecisionCoachEnv
 
-state:
+tasks:
+  - id: easy_task
+    description: Simple binary decision
+  - id: medium_task
+    description: Multi-factor decision
+  - id: hard_task
+    description: Complex ambiguous decision
+
+observation_space:
   type: object
-  properties:
-    user_problem:
-      type: string
-    step:
-      type: integer
-    conversation_history:
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-          content:
-            type: string
-    options:
-      type: array
-      items:
-        type: string
-    final_answer:
-      type: string
 
-actions:
-  - name: ask_question
-    description: Ask a clarifying question to better understand the user's problem
-
-  - name: generate_options
-    description: Generate possible options or solutions based on the problem
-
-  - name: final_recommendation
-    description: Provide a final actionable recommendation
-
-observations:
-  description: >
-    The updated state after each action, including conversation history,
-    generated options, and final recommendation.
-
-reward:
-  type: float
-  range: [0.0, 1.0]
-  description: >
-    Score based on quality of reasoning, relevance of options,
-    and usefulness of final recommendation.
-
-environment:
-  reset: Initializes the state with user input
-  step: Applies an action and updates the state
-  done: True when final recommendation is produced or max steps reached
+action_space:
+  type: object
